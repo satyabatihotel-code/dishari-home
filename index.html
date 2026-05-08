@@ -16,7 +16,7 @@ font-family:Arial,sans-serif;
 }
 
 body{
-background:#ffffff;
+background:#fff;
 color:#111;
 padding-bottom:90px;
 }
@@ -27,7 +27,7 @@ padding-bottom:90px;
 position:sticky;
 top:0;
 z-index:1000;
-background:#ffffff;
+background:#fff;
 padding:14px 16px;
 display:flex;
 justify-content:space-between;
@@ -38,14 +38,11 @@ box-shadow:0 2px 10px rgba(0,0,0,0.06);
 .logo{
 font-size:24px;
 font-weight:bold;
-color:#111;
-letter-spacing:1px;
 }
 
 /* SEARCH */
 
 .search-box{
-width:100%;
 padding:0 14px;
 margin-top:12px;
 }
@@ -56,8 +53,8 @@ padding:12px;
 border:none;
 border-radius:12px;
 background:#f3f3f3;
-font-size:15px;
 outline:none;
+font-size:15px;
 }
 
 /* BANNER */
@@ -70,7 +67,6 @@ padding:14px;
 width:100%;
 border-radius:18px;
 display:block;
-box-shadow:0 4px 18px rgba(0,0,0,0.08);
 }
 
 /* CATEGORY */
@@ -78,30 +74,30 @@ box-shadow:0 4px 18px rgba(0,0,0,0.08);
 .category-row{
 display:flex;
 overflow-x:auto;
-padding:0 14px 12px;
-gap:12px;
+gap:10px;
+padding:0 14px 14px;
 scrollbar-width:none;
 }
 
 .category{
 min-width:95px;
+padding:12px;
 background:#fff;
 border-radius:14px;
-padding:14px 10px;
 text-align:center;
 font-weight:bold;
 box-shadow:0 2px 8px rgba(0,0,0,0.06);
-border:1px solid #f1f1f1;
+border:1px solid #eee;
 cursor:pointer;
 white-space:nowrap;
 }
 
-/* SECTION */
+/* TITLE */
 
 .section-title{
 padding:0 16px;
 margin:10px 0;
-font-size:20px;
+font-size:22px;
 font-weight:bold;
 }
 
@@ -119,11 +115,6 @@ background:#fff;
 border-radius:18px;
 overflow:hidden;
 box-shadow:0 2px 10px rgba(0,0,0,0.08);
-transition:0.2s;
-}
-
-.product-card:hover{
-transform:translateY(-3px);
 }
 
 .product-image{
@@ -139,7 +130,7 @@ padding:12px;
 
 .product-id{
 font-size:11px;
-color:#888;
+color:#777;
 margin-bottom:6px;
 }
 
@@ -156,23 +147,22 @@ margin-bottom:8px;
 line-height:1.4;
 }
 
-.price-row{
-display:flex;
-align-items:center;
-gap:8px;
-margin-bottom:8px;
+.price-area{
+margin-bottom:10px;
 }
 
 .old-price{
 font-size:14px;
+color:#999;
 text-decoration:line-through;
-color:#888;
+margin-right:8px;
+display:inline-block;
 }
 
-.product-price{
-font-size:18px;
+.new-price{
+font-size:20px;
 font-weight:bold;
-color:#111;
+display:inline-block;
 }
 
 .offer-box{
@@ -182,7 +172,7 @@ padding:6px 10px;
 border-radius:8px;
 font-size:12px;
 display:inline-block;
-margin-bottom:10px;
+margin-top:8px;
 }
 
 .stock{
@@ -191,50 +181,47 @@ font-weight:bold;
 margin-bottom:10px;
 }
 
-.in-stock{
+.instock{
 color:green;
 }
 
-.out-stock{
+.outstock{
 color:red;
 }
 
 .buy-btn{
 width:100%;
-padding:10px;
+padding:11px;
 border:none;
 border-radius:10px;
 background:#111;
 color:#fff;
 font-weight:bold;
-font-size:14px;
 cursor:pointer;
 }
 
-/* BOTTOM NAV */
+/* NAVBAR */
 
 .bottom-nav{
 position:fixed;
 bottom:0;
 width:100%;
-background:#ffffff;
+background:#fff;
 display:flex;
 justify-content:space-around;
 padding:12px 0;
 box-shadow:0 -2px 12px rgba(0,0,0,0.08);
-z-index:999;
 }
 
 .nav-item{
 text-align:center;
 font-size:13px;
-color:#444;
 font-weight:bold;
 }
 
 .nav-icon{
-font-size:20px;
 display:block;
+font-size:20px;
 margin-bottom:4px;
 }
 
@@ -288,10 +275,9 @@ margin-bottom:4px;
 
 <!-- PRODUCTS -->
 
-<div class="product-grid" id="productGrid">
-</div>
+<div class="product-grid" id="productGrid"></div>
 
-<!-- BOTTOM NAVIGATION -->
+<!-- NAVBAR -->
 
 <div class="bottom-nav">
 
@@ -319,97 +305,135 @@ Track
 
 <script>
 
-const SHEET_ID = "12klOqNz4ER47bvsZrvqJMkYnghi_T63J_LmaYvNeb9c";
-const SHEET_NAME = "Dishari1";
+/* GOOGLE SHEET CSV LINK */
 
-const SHEET_URL =
-`https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`;
+const sheetURL =
+"https://docs.google.com/spreadsheets/d/12klOqNz4ER47bvsZrvqJMkYnghi_T63J_LmaYvNeb9c/gviz/tq?tqx=out:csv&sheet=Dishari1";
 
 let allProducts = [];
 
+/* FETCH SHEET */
+
 async function fetchProducts(){
 
-const response = await fetch(SHEET_URL);
-const data = await response.json();
+const response = await fetch(sheetURL);
+const csv = await response.text();
 
-allProducts = data
-.filter(item => item.Show?.toLowerCase() === "yes")
-.sort((a,b)=> Number(a.Priority)-Number(b.Priority));
+const rows = csv.split("\n").slice(1);
+
+allProducts = rows.map(row => {
+
+const cols = row.split(",");
+
+return {
+
+priority: cols[0]?.replace(/"/g,'').trim(),
+name: cols[1]?.replace(/"/g,'').trim(),
+category: cols[2]?.replace(/"/g,'').trim(),
+show: cols[3]?.replace(/"/g,'').trim(),
+price: cols[4]?.replace(/"/g,'').trim(),
+description: cols[5]?.replace(/"/g,'').trim(),
+image: cols[6]?.replace(/"/g,'').trim(),
+stock: cols[7]?.replace(/"/g,'').trim(),
+offer: cols[8]?.replace(/"/g,'').trim()
+
+};
+
+})
+
+.filter(item => item.show.toLowerCase() === "yes")
+
+.sort((a,b)=> Number(a.priority)-Number(b.priority));
 
 displayProducts(allProducts);
 
 }
 
-function generateProductId(){
-return "DS" + Math.floor(100000 + Math.random() * 900000);
+/* RANDOM PRODUCT ID */
+
+function randomId(){
+
+return "DS" + Math.floor(100000 + Math.random()*900000);
+
 }
+
+/* DISPLAY PRODUCTS */
 
 function displayProducts(products){
 
-const productGrid = document.getElementById("productGrid");
+const container = document.getElementById("productGrid");
 
-productGrid.innerHTML = "";
+container.innerHTML = "";
 
 products.forEach(product => {
 
-const productId = generateProductId();
-
-const offerPrice = product["Today Offer"];
+const id = randomId();
 
 let priceHTML = "";
 
-if(offerPrice && offerPrice.trim() !== ""){
+if(product.offer){
 
 priceHTML = `
-<div class="price-row">
-<div class="old-price">₹${product.Price}</div>
-<div class="product-price">₹${offerPrice}</div>
-</div>
+
+<div class="price-area">
+
+<span class="old-price">
+₹${product.price}
+</span>
+
+<span class="new-price">
+₹${product.offer}
+</span>
+
 <div class="offer-box">
 🔥 Today Offer
 </div>
+
+</div>
+
 `;
 
 }else{
 
 priceHTML = `
-<div class="product-price">
-₹${product.Price}
+
+<div class="price-area">
+
+<span class="new-price">
+₹${product.price}
+</span>
+
 </div>
+
 `;
 
 }
 
-const stockClass =
-product.Stock === "Out Of Stock"
-? "out-stock"
-: "in-stock";
-
-productGrid.innerHTML += `
+container.innerHTML += `
 
 <div class="product-card">
 
 <img class="product-image"
-src="${product["Image Url"]}">
+src="${product.image}">
 
 <div class="product-details">
 
 <div class="product-id">
-Product ID : ${productId}
+Product ID : ${id}
 </div>
 
 <div class="product-name">
-${product["Product Name"]}
+${product.name}
 </div>
 
 <div class="product-description">
-${product.Description}
+${product.description}
 </div>
 
 ${priceHTML}
 
-<div class="stock ${stockClass}">
-${product.Stock}
+<div class="stock ${product.stock === 'Out Of Stock' ? 'outstock':'instock'}">
+${product.stock}
 </div>
 
 <button class="buy-btn">
@@ -431,15 +455,18 @@ Add To Cart
 function filterCategory(category){
 
 if(category === "All"){
+
 displayProducts(allProducts);
-return;
-}
+
+}else{
 
 const filtered = allProducts.filter(
-item => item.Category === category
+item => item.category === category
 );
 
 displayProducts(filtered);
+
+}
 
 }
 
@@ -451,14 +478,14 @@ document.getElementById("searchInput")
 const value = this.value.toLowerCase();
 
 const filtered = allProducts.filter(item =>
-item["Product Name"]
-.toLowerCase()
-.includes(value)
+item.name.toLowerCase().includes(value)
 );
 
 displayProducts(filtered);
 
 });
+
+/* LOAD */
 
 fetchProducts();
 
