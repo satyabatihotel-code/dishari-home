@@ -26,17 +26,14 @@ padding-bottom:90px;
 .header{
 position:sticky;
 top:0;
-z-index:1000;
+z-index:999;
 background:#ffffff;
 padding:14px 16px;
-display:flex;
-justify-content:space-between;
-align-items:center;
 box-shadow:0 2px 10px rgba(0,0,0,0.05);
 }
 
 .logo{
-font-size:24px;
+font-size:25px;
 font-weight:bold;
 color:#071d33;
 }
@@ -44,13 +41,12 @@ color:#071d33;
 /* SEARCH */
 
 .search-box{
-padding:0 14px;
-margin-top:12px;
+padding:12px 14px;
 }
 
 .search-box input{
 width:100%;
-padding:13px;
+padding:14px;
 border:none;
 border-radius:14px;
 background:#f5f7fa;
@@ -62,12 +58,12 @@ color:#2e3d5c;
 /* BANNER */
 
 .banner{
-padding:14px;
+padding:0 14px 14px;
 }
 
 .banner img{
 width:100%;
-border-radius:18px;
+border-radius:20px;
 display:block;
 }
 
@@ -77,7 +73,7 @@ display:block;
 display:flex;
 overflow-x:auto;
 gap:10px;
-padding:0 14px 14px;
+padding:0 14px 16px;
 scrollbar-width:none;
 }
 
@@ -88,24 +84,23 @@ display:none;
 .category{
 min-width:95px;
 padding:12px;
-background:#ffffff;
+background:#fff;
 border-radius:14px;
 text-align:center;
-font-weight:bold;
 font-size:14px;
+font-weight:bold;
 color:#2e3d5c;
-box-shadow:0 2px 8px rgba(0,0,0,0.05);
 border:1px solid #edf1f5;
+box-shadow:0 2px 8px rgba(0,0,0,0.05);
 cursor:pointer;
-white-space:nowrap;
 }
 
 /* TITLE */
 
 .section-title{
 padding:0 16px;
-margin:8px 0 14px;
-font-size:23px;
+margin-bottom:14px;
+font-size:24px;
 font-weight:bold;
 color:#071d33;
 }
@@ -117,26 +112,25 @@ display:grid;
 grid-template-columns:repeat(2,1fr);
 gap:14px;
 padding:0 14px;
-align-items:stretch;
 }
 
 .product-card{
-background:#ffffff;
+background:#fff;
 border-radius:20px;
 overflow:hidden;
+border:1px solid #edf1f5;
 box-shadow:0 2px 12px rgba(0,0,0,0.05);
 display:flex;
 flex-direction:column;
 height:100%;
-border:1px solid #eef2f5;
 }
 
 .product-image{
 width:100%;
-height:240px;
+height:230px;
 object-fit:cover;
-background:#f5f7fa;
-display:block;
+background:#f3f5f7;
+cursor:pointer;
 }
 
 .product-details{
@@ -149,52 +143,51 @@ flex:1;
 .product-id{
 font-size:11px;
 color:#5b7785;
-margin-bottom:6px;
+margin-bottom:5px;
 }
 
 .product-name{
 font-size:15px;
 font-weight:bold;
 color:#2e3d5c;
-margin-bottom:6px;
 min-height:38px;
+margin-bottom:6px;
 }
 
 .product-description{
 font-size:13px;
-color:#5b7785;
 line-height:1.5;
-margin-bottom:10px;
+color:#5b7785;
 min-height:42px;
+margin-bottom:10px;
 }
 
-.price-area{
+.price-row{
 margin-bottom:10px;
 }
 
 .old-price{
 font-size:14px;
-color:#9aa7b2;
 text-decoration:line-through;
+color:#8fa1ae;
 margin-right:8px;
 }
 
 .new-price{
-font-size:20px;
+font-size:21px;
 font-weight:bold;
 color:#071d33;
 }
 
-.offer-box{
+.offer-tag{
+display:inline-block;
 background:#071d33;
-color:#ffffff;
+color:#fff;
 padding:8px 12px;
 border-radius:10px;
 font-size:12px;
 font-weight:bold;
-display:inline-block;
 margin-top:8px;
-letter-spacing:0.3px;
 }
 
 .stock{
@@ -204,7 +197,7 @@ margin-bottom:12px;
 }
 
 .instock{
-color:#1f9d55;
+color:#1fa55b;
 }
 
 .outstock{
@@ -217,24 +210,145 @@ padding:12px;
 border:none;
 border-radius:12px;
 background:#071d33;
-color:#ffffff;
-font-weight:bold;
+color:#fff;
 font-size:14px;
+font-weight:bold;
 cursor:pointer;
 margin-top:auto;
 }
 
-/* BOTTOM NAV */
+/* MODAL */
+
+.modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#fff;
+z-index:9999;
+overflow-y:auto;
+display:none;
+padding-bottom:100px;
+}
+
+.modal-content{
+padding:16px;
+}
+
+.close-btn{
+font-size:28px;
+font-weight:bold;
+margin-bottom:10px;
+cursor:pointer;
+color:#071d33;
+}
+
+.slider{
+position:relative;
+overflow:hidden;
+border-radius:18px;
+}
+
+.slide-image{
+width:100%;
+height:420px;
+object-fit:cover;
+border-radius:18px;
+transition:0.3s;
+}
+
+.slide-btn{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+background:rgba(0,0,0,0.4);
+color:#fff;
+border:none;
+font-size:22px;
+width:42px;
+height:42px;
+border-radius:50%;
+cursor:pointer;
+}
+
+.prev{
+left:10px;
+}
+
+.next{
+right:10px;
+}
+
+.zoom-buttons{
+display:flex;
+gap:10px;
+margin-top:10px;
+}
+
+.zoom-buttons button{
+flex:1;
+padding:12px;
+border:none;
+border-radius:12px;
+background:#071d33;
+color:#fff;
+font-weight:bold;
+}
+
+.modal-name{
+font-size:24px;
+font-weight:bold;
+margin-top:16px;
+margin-bottom:8px;
+color:#071d33;
+}
+
+.modal-desc{
+font-size:14px;
+line-height:1.6;
+color:#5b7785;
+margin-bottom:12px;
+}
+
+.review-box{
+background:#f5f7fa;
+padding:12px;
+border-radius:14px;
+margin-top:12px;
+font-size:13px;
+line-height:1.5;
+color:#2e3d5c;
+}
+
+.action-buttons{
+display:flex;
+gap:10px;
+margin-top:20px;
+}
+
+.action-buttons button{
+flex:1;
+padding:14px;
+border:none;
+border-radius:14px;
+background:#071d33;
+color:#fff;
+font-weight:bold;
+font-size:14px;
+}
+
+/* NAV */
 
 .bottom-nav{
 position:fixed;
 bottom:0;
 width:100%;
-background:#ffffff;
+background:#fff;
 display:flex;
 justify-content:space-around;
 padding:12px 0;
-box-shadow:0 -2px 12px rgba(0,0,0,0.05);
+box-shadow:0 -2px 10px rgba(0,0,0,0.05);
 z-index:999;
 }
 
@@ -251,39 +365,22 @@ font-size:20px;
 margin-bottom:4px;
 }
 
-/* LOADER */
-
-.loader{
-text-align:center;
-padding:30px;
-font-size:15px;
-color:#5b7785;
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-
 <div class="header">
 <div class="logo">Dishari</div>
 </div>
-
-<!-- SEARCH -->
 
 <div class="search-box">
 <input type="text" id="searchInput" placeholder="Search Fashion">
 </div>
 
-<!-- BANNER -->
-
 <div class="banner">
 <img src="https://res.cloudinary.com/dh6npc54z/image/upload/f_auto,q_auto,w_1200/Dishari_xahbgv">
 </div>
-
-<!-- CATEGORY -->
 
 <div class="category-row">
 
@@ -302,21 +399,70 @@ color:#5b7785;
 
 </div>
 
-<!-- TITLE -->
-
 <div class="section-title">
 ✨ New Arrivals ✨
 </div>
 
-<!-- PRODUCTS -->
-
-<div id="loader" class="loader">
-Loading Fashion Collection...
-</div>
-
 <div class="product-grid" id="productGrid"></div>
 
-<!-- BOTTOM NAV -->
+<!-- PRODUCT MODAL -->
+
+<div class="modal" id="productModal">
+
+<div class="modal-content">
+
+<div class="close-btn" onclick="closeModal()">
+✕
+</div>
+
+<div class="slider">
+
+<button class="slide-btn prev" onclick="prevSlide()">❮</button>
+
+<img id="slideImage"
+class="slide-image">
+
+<button class="slide-btn next" onclick="nextSlide()">❯</button>
+
+</div>
+
+<div class="zoom-buttons">
+
+<button onclick="zoomIn()">Zoom In</button>
+
+<button onclick="zoomOut()">Zoom Out</button>
+
+</div>
+
+<div class="modal-name" id="modalName"></div>
+
+<div class="product-id" id="modalId"></div>
+
+<div class="modal-desc" id="modalDesc"></div>
+
+<div id="modalPrice"></div>
+
+<div id="modalStock"></div>
+
+<div class="review-box" id="modalReview"></div>
+
+<div class="action-buttons">
+
+<button>
+Add To Cart
+</button>
+
+<button onclick="scrollToProducts()">
+More
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- NAV -->
 
 <div class="bottom-nav">
 
@@ -349,7 +495,26 @@ const sheetURL =
 
 let allProducts = [];
 
-/* FETCH */
+let currentImages = [];
+let currentIndex = 0;
+let zoomLevel = 1;
+
+const reviews = [
+
+"Excellent quality and beautiful fitting.",
+"Very soft fabric and premium design.",
+"Looks exactly same as picture.",
+"Super comfortable for daily wear.",
+"Perfect product for this price range.",
+"Packaging and delivery was impressive.",
+"Colour and stitching both are amazing.",
+"Very stylish and elegant collection.",
+"Fabric quality exceeded expectations.",
+"Loved the trendy modern look.",
+"Perfect festive collection for women.",
+"Material feels rich and comfortable."
+
+];
 
 async function fetchProducts(){
 
@@ -358,11 +523,11 @@ const csv = await response.text();
 
 const rows = csv.split("\n").slice(1);
 
-allProducts = rows.map(row => {
+allProducts = rows.map((row,index)=>{
 
 const cols = row.split(",");
 
-return {
+return{
 
 priority: cols[0]?.replace(/"/g,'').trim(),
 name: cols[1]?.replace(/"/g,'').trim(),
@@ -372,59 +537,54 @@ price: cols[4]?.replace(/"/g,'').trim(),
 description: cols[5]?.replace(/"/g,'').trim(),
 image: cols[6]?.replace(/"/g,'').trim(),
 stock: cols[7]?.replace(/"/g,'').trim(),
-offer: cols[8]?.replace(/"/g,'').trim()
+offer: cols[8]?.replace(/"/g,'').trim(),
+
+img2: cols[9]?.replace(/"/g,'').trim(),
+img3: cols[10]?.replace(/"/g,'').trim(),
+img4: cols[11]?.replace(/"/g,'').trim(),
+img5: cols[12]?.replace(/"/g,'').trim(),
+img6: cols[13]?.replace(/"/g,'').trim(),
+
+id:"DS"+(100000+index)
 
 };
 
 })
 
 .filter(item =>
-item.show.toLowerCase() === "yes"
+item.show.toLowerCase()==="yes"
 )
 
 .sort((a,b)=>
 Number(a.priority)-Number(b.priority)
 );
 
-/* SHOW ONLY NEW ARRIVALS IN HOME */
-
-const newArrivals = allProducts.filter(item =>
-item.category.toLowerCase() === "trendz"
+const trendzOnly = allProducts.filter(item =>
+item.category.toLowerCase()==="trendz"
 );
 
-displayProducts(newArrivals);
-
-document.getElementById("loader").style.display="none";
+displayProducts(trendzOnly);
 
 }
-
-/* RANDOM PRODUCT ID */
-
-function randomId(){
-
-return "DS" +
-Math.floor(100000 + Math.random()*900000);
-
-}
-
-/* DISPLAY */
 
 function displayProducts(products){
 
 const container =
 document.getElementById("productGrid");
 
-container.innerHTML = "";
+container.innerHTML="";
 
-products.forEach(product => {
+products.forEach((product,index)=>{
 
-let priceHTML = "";
+const review = reviews[index % reviews.length];
+
+let priceHTML="";
 
 if(product.offer){
 
-priceHTML = `
+priceHTML=`
 
-<div class="price-area">
+<div class="price-row">
 
 <span class="old-price">
 ₹${product.price}
@@ -436,8 +596,8 @@ priceHTML = `
 
 <br>
 
-<div class="offer-box">
-TODAY OFFER
+<div class="offer-tag">
+Today Offer
 </div>
 
 </div>
@@ -446,9 +606,9 @@ TODAY OFFER
 
 }else{
 
-priceHTML = `
+priceHTML=`
 
-<div class="price-area">
+<div class="price-row">
 
 <span class="new-price">
 ₹${product.price}
@@ -467,13 +627,13 @@ container.innerHTML += `
 <img
 class="product-image"
 loading="lazy"
-src="${product.image}"
-alt="${product.name}">
+onclick='openModal(${JSON.stringify(product)})'
+src="${product.image}?w=500&q=70">
 
 <div class="product-details">
 
 <div class="product-id">
-Product ID : ${randomId()}
+${product.id}
 </div>
 
 <div class="product-name">
@@ -486,7 +646,7 @@ ${product.description}
 
 ${priceHTML}
 
-<div class="stock ${product.stock === 'Out Of Stock' ? 'outstock':'instock'}">
+<div class="stock ${product.stock==="Out Of Stock" ? "outstock":"instock"}">
 
 ${product.stock}
 
@@ -506,44 +666,187 @@ Add To Cart
 
 }
 
-/* CATEGORY */
-
 function filterCategory(category){
 
-if(category === "All"){
+if(category==="All"){
 
-const trendzOnly = allProducts.filter(item =>
-item.category.toLowerCase() === "trendz"
-);
-
-displayProducts(trendzOnly);
+displayProducts(allProducts);
 
 return;
 
 }
 
 const filtered = allProducts.filter(item =>
-item.category.toLowerCase() === category.toLowerCase()
+item.category.toLowerCase()===category.toLowerCase()
 );
 
 displayProducts(filtered);
 
 }
 
-/* SEARCH */
-
 document.getElementById("searchInput")
-.addEventListener("keyup", function(){
+.addEventListener("keyup",function(){
 
-const value = this.value.toLowerCase();
+const value=this.value.toLowerCase();
 
-const filtered = allProducts.filter(item =>
+const filtered=allProducts.filter(item =>
 item.name.toLowerCase().includes(value)
 );
 
 displayProducts(filtered);
 
 });
+
+function openModal(product){
+
+document.getElementById("productModal").style.display="block";
+
+currentImages = [
+
+product.image,
+product.img2,
+product.img3,
+product.img4,
+product.img5,
+product.img6
+
+].filter(Boolean);
+
+currentIndex=0;
+
+updateSlide();
+
+document.getElementById("modalName").innerHTML =
+product.name;
+
+document.getElementById("modalId").innerHTML =
+product.id;
+
+document.getElementById("modalDesc").innerHTML =
+product.description;
+
+let priceHTML="";
+
+if(product.offer){
+
+priceHTML=`
+
+<div class="price-row">
+
+<span class="old-price">
+₹${product.price}
+</span>
+
+<span class="new-price">
+₹${product.offer}
+</span>
+
+<div class="offer-tag">
+Today Offer
+</div>
+
+</div>
+
+`;
+
+}else{
+
+priceHTML=`
+
+<div class="new-price">
+₹${product.price}
+</div>
+
+`;
+
+}
+
+document.getElementById("modalPrice").innerHTML =
+priceHTML;
+
+document.getElementById("modalStock").innerHTML =
+`<div class="stock ${product.stock==="Out Of Stock" ? "outstock":"instock"}">${product.stock}</div>`;
+
+const randomReview =
+reviews[Math.floor(Math.random()*reviews.length)];
+
+document.getElementById("modalReview").innerHTML =
+"⭐ "+randomReview;
+
+}
+
+function closeModal(){
+
+document.getElementById("productModal").style.display="none";
+
+}
+
+function updateSlide(){
+
+const img =
+document.getElementById("slideImage");
+
+img.src =
+currentImages[currentIndex]+"?w=800&q=75";
+
+img.style.transform=`scale(${zoomLevel})`;
+
+}
+
+function nextSlide(){
+
+if(currentIndex < currentImages.length-1){
+
+currentIndex++;
+
+updateSlide();
+
+}
+
+}
+
+function prevSlide(){
+
+if(currentIndex > 0){
+
+currentIndex--;
+
+updateSlide();
+
+}
+
+}
+
+function zoomIn(){
+
+zoomLevel +=0.2;
+
+updateSlide();
+
+}
+
+function zoomOut(){
+
+if(zoomLevel>1){
+
+zoomLevel -=0.2;
+
+updateSlide();
+
+}
+
+}
+
+function scrollToProducts(){
+
+closeModal();
+
+window.scrollTo({
+top:500,
+behavior:"smooth"
+});
+
+}
 
 fetchProducts();
 
