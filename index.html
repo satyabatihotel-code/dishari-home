@@ -12,7 +12,7 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial, sans-serif;
+font-family:Arial,sans-serif;
 }
 
 body{
@@ -42,8 +42,11 @@ color:#111;
 letter-spacing:1px;
 }
 
+/* SEARCH */
+
 .search-box{
 width:100%;
+padding:0 14px;
 margin-top:12px;
 }
 
@@ -81,7 +84,7 @@ scrollbar-width:none;
 }
 
 .category{
-min-width:90px;
+min-width:95px;
 background:#fff;
 border-radius:14px;
 padding:14px 10px;
@@ -89,6 +92,8 @@ text-align:center;
 font-weight:bold;
 box-shadow:0 2px 8px rgba(0,0,0,0.06);
 border:1px solid #f1f1f1;
+cursor:pointer;
+white-space:nowrap;
 }
 
 /* SECTION */
@@ -123,7 +128,7 @@ transform:translateY(-3px);
 
 .product-image{
 width:100%;
-height:190px;
+height:220px;
 object-fit:cover;
 background:#f3f3f3;
 }
@@ -132,17 +137,66 @@ background:#f3f3f3;
 padding:12px;
 }
 
+.product-id{
+font-size:11px;
+color:#888;
+margin-bottom:6px;
+}
+
 .product-name{
 font-size:15px;
 font-weight:bold;
 margin-bottom:6px;
 }
 
+.product-description{
+font-size:13px;
+color:#666;
+margin-bottom:8px;
+line-height:1.4;
+}
+
+.price-row{
+display:flex;
+align-items:center;
+gap:8px;
+margin-bottom:8px;
+}
+
+.old-price{
+font-size:14px;
+text-decoration:line-through;
+color:#888;
+}
+
 .product-price{
 font-size:18px;
 font-weight:bold;
 color:#111;
+}
+
+.offer-box{
+background:#111;
+color:#fff;
+padding:6px 10px;
+border-radius:8px;
+font-size:12px;
+display:inline-block;
 margin-bottom:10px;
+}
+
+.stock{
+font-size:12px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.in-stock{
+color:green;
+}
+
+.out-stock{
+color:red;
 }
 
 .buy-btn{
@@ -154,6 +208,7 @@ background:#111;
 color:#fff;
 font-weight:bold;
 font-size:14px;
+cursor:pointer;
 }
 
 /* BOTTOM NAV */
@@ -194,8 +249,10 @@ margin-bottom:4px;
 <div class="logo">Dishari</div>
 </div>
 
-<div class="search-box" style="padding:0 14px;">
-<input type="text" placeholder="Search Fashion">
+<!-- SEARCH -->
+
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Search Fashion">
 </div>
 
 <!-- BANNER -->
@@ -208,118 +265,30 @@ margin-bottom:4px;
 
 <div class="category-row">
 
-<div class="category">Saree</div>
-<div class="category">Kurti</div>
-<div class="category">Dress</div>
-<div class="category">Tops</div>
-<div class="category">Kids</div>
+<div class="category" onclick="filterCategory('All')">All</div>
+<div class="category" onclick="filterCategory('Saree')">Saree</div>
+<div class="category" onclick="filterCategory('Kurti')">Kurti</div>
+<div class="category" onclick="filterCategory('Tops')">Tops</div>
+<div class="category" onclick="filterCategory('Palazzo')">Palazzo</div>
+<div class="category" onclick="filterCategory('Salwar')">Salwar</div>
+<div class="category" onclick="filterCategory('Gown')">Gown</div>
+<div class="category" onclick="filterCategory('Nighty')">Nighty</div>
+<div class="category" onclick="filterCategory('Western')">Western</div>
+<div class="category" onclick="filterCategory('Kids')">Kids</div>
+<div class="category" onclick="filterCategory('Bedsheet')">Bedsheet</div>
+<div class="category" onclick="filterCategory('Trendz')">Trendz</div>
 
+</div>
+
+<!-- TITLE -->
+
+<div class="section-title">
+✨ New Arrivals ✨
 </div>
 
 <!-- PRODUCTS -->
 
-<div class="section-title">
-Trending Products
-</div>
-
-<div class="product-grid">
-
-<!-- PRODUCT -->
-
-<div class="product-card">
-
-<img class="product-image"
-src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=1000&auto=format&fit=crop">
-
-<div class="product-details">
-
-<div class="product-name">
-Stylish Women Saree
-</div>
-
-<div class="product-price">
-₹799
-</div>
-
-<button class="buy-btn">
-Add To Cart
-</button>
-
-</div>
-</div>
-
-<!-- PRODUCT -->
-
-<div class="product-card">
-
-<img class="product-image"
-src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1000&auto=format&fit=crop">
-
-<div class="product-details">
-
-<div class="product-name">
-Modern Kurti
-</div>
-
-<div class="product-price">
-₹599
-</div>
-
-<button class="buy-btn">
-Add To Cart
-</button>
-
-</div>
-</div>
-
-<!-- PRODUCT -->
-
-<div class="product-card">
-
-<img class="product-image"
-src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=1000&auto=format&fit=crop">
-
-<div class="product-details">
-
-<div class="product-name">
-Party Wear Dress
-</div>
-
-<div class="product-price">
-₹999
-</div>
-
-<button class="buy-btn">
-Add To Cart
-</button>
-
-</div>
-</div>
-
-<!-- PRODUCT -->
-
-<div class="product-card">
-
-<img class="product-image"
-src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1000&auto=format&fit=crop">
-
-<div class="product-details">
-
-<div class="product-name">
-Premium Top
-</div>
-
-<div class="product-price">
-₹499
-</div>
-
-<button class="buy-btn">
-Add To Cart
-</button>
-
-</div>
-</div>
-
+<div class="product-grid" id="productGrid">
 </div>
 
 <!-- BOTTOM NAVIGATION -->
@@ -347,6 +316,153 @@ Track
 </div>
 
 </div>
+
+<script>
+
+const SHEET_ID = "12klOqNz4ER47bvsZrvqJMkYnghi_T63J_LmaYvNeb9c";
+const SHEET_NAME = "Dishari1";
+
+const SHEET_URL =
+`https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`;
+
+let allProducts = [];
+
+async function fetchProducts(){
+
+const response = await fetch(SHEET_URL);
+const data = await response.json();
+
+allProducts = data
+.filter(item => item.Show?.toLowerCase() === "yes")
+.sort((a,b)=> Number(a.Priority)-Number(b.Priority));
+
+displayProducts(allProducts);
+
+}
+
+function generateProductId(){
+return "DS" + Math.floor(100000 + Math.random() * 900000);
+}
+
+function displayProducts(products){
+
+const productGrid = document.getElementById("productGrid");
+
+productGrid.innerHTML = "";
+
+products.forEach(product => {
+
+const productId = generateProductId();
+
+const offerPrice = product["Today Offer"];
+
+let priceHTML = "";
+
+if(offerPrice && offerPrice.trim() !== ""){
+
+priceHTML = `
+<div class="price-row">
+<div class="old-price">₹${product.Price}</div>
+<div class="product-price">₹${offerPrice}</div>
+</div>
+<div class="offer-box">
+🔥 Today Offer
+</div>
+`;
+
+}else{
+
+priceHTML = `
+<div class="product-price">
+₹${product.Price}
+</div>
+`;
+
+}
+
+const stockClass =
+product.Stock === "Out Of Stock"
+? "out-stock"
+: "in-stock";
+
+productGrid.innerHTML += `
+
+<div class="product-card">
+
+<img class="product-image"
+src="${product["Image Url"]}">
+
+<div class="product-details">
+
+<div class="product-id">
+Product ID : ${productId}
+</div>
+
+<div class="product-name">
+${product["Product Name"]}
+</div>
+
+<div class="product-description">
+${product.Description}
+</div>
+
+${priceHTML}
+
+<div class="stock ${stockClass}">
+${product.Stock}
+</div>
+
+<button class="buy-btn">
+Add To Cart
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+/* CATEGORY FILTER */
+
+function filterCategory(category){
+
+if(category === "All"){
+displayProducts(allProducts);
+return;
+}
+
+const filtered = allProducts.filter(
+item => item.Category === category
+);
+
+displayProducts(filtered);
+
+}
+
+/* SEARCH */
+
+document.getElementById("searchInput")
+.addEventListener("keyup", function(){
+
+const value = this.value.toLowerCase();
+
+const filtered = allProducts.filter(item =>
+item["Product Name"]
+.toLowerCase()
+.includes(value)
+);
+
+displayProducts(filtered);
+
+});
+
+fetchProducts();
+
+</script>
 
 </body>
 </html>
