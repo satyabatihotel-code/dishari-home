@@ -1,508 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Dishari</title>
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-body{
-background:#ffffff;
-color:#2e3d5c;
-padding-bottom:90px;
-}
-
-/* HEADER */
-
-.header{
-position:sticky;
-top:0;
-z-index:999;
-background:#ffffff;
-padding:14px 16px;
-box-shadow:0 2px 10px rgba(0,0,0,0.05);
-}
-
-.logo{
-font-size:25px;
-font-weight:bold;
-color:#071d33;
-}
-
-/* SEARCH */
-
-.search-box{
-padding:12px 14px;
-}
-
-.search-box input{
-width:100%;
-padding:14px;
-border:none;
-border-radius:14px;
-background:#f5f7fa;
-outline:none;
-font-size:15px;
-color:#2e3d5c;
-}
-
-/* BANNER */
-
-.banner{
-padding:0 14px 14px;
-}
-
-.banner img{
-width:100%;
-border-radius:20px;
-display:block;
-}
-
-/* CATEGORY */
-
-.category-row{
-display:flex;
-overflow-x:auto;
-gap:10px;
-padding:0 14px 16px;
-scrollbar-width:none;
-}
-
-.category-row::-webkit-scrollbar{
-display:none;
-}
-
-.category{
-min-width:95px;
-padding:12px;
-background:#fff;
-border-radius:14px;
-text-align:center;
-font-size:14px;
-font-weight:bold;
-color:#2e3d5c;
-border:1px solid #edf1f5;
-box-shadow:0 2px 8px rgba(0,0,0,0.05);
-cursor:pointer;
-}
-
-/* TITLE */
-
-.section-title{
-padding:0 16px;
-margin-bottom:14px;
-font-size:24px;
-font-weight:bold;
-color:#071d33;
-}
-
-/* PRODUCTS */
-
-.product-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:14px;
-padding:0 14px;
-}
-
-.product-card{
-background:#fff;
-border-radius:20px;
-overflow:hidden;
-border:1px solid #edf1f5;
-box-shadow:0 2px 12px rgba(0,0,0,0.05);
-display:flex;
-flex-direction:column;
-height:100%;
-}
-
-.product-image{
-width:100%;
-height:230px;
-object-fit:cover;
-background:#f3f5f7;
-cursor:pointer;
-}
-
-.product-details{
-padding:12px;
-display:flex;
-flex-direction:column;
-flex:1;
-}
-
-.product-id{
-font-size:11px;
-color:#5b7785;
-margin-bottom:5px;
-}
-
-.product-name{
-font-size:15px;
-font-weight:bold;
-color:#2e3d5c;
-min-height:38px;
-margin-bottom:6px;
-}
-
-.product-description{
-font-size:13px;
-line-height:1.5;
-color:#5b7785;
-min-height:42px;
-margin-bottom:10px;
-}
-
-.price-row{
-margin-bottom:10px;
-}
-
-.old-price{
-font-size:14px;
-text-decoration:line-through;
-color:#8fa1ae;
-margin-right:8px;
-}
-
-.new-price{
-font-size:21px;
-font-weight:bold;
-color:#071d33;
-}
-
-.offer-tag{
-display:inline-block;
-background:#071d33;
-color:#fff;
-padding:8px 12px;
-border-radius:10px;
-font-size:12px;
-font-weight:bold;
-margin-top:8px;
-}
-
-.stock{
-font-size:13px;
-font-weight:bold;
-margin-bottom:12px;
-}
-
-.instock{
-color:#1fa55b;
-}
-
-.outstock{
-color:#e53935;
-}
-
-.buy-btn{
-width:100%;
-padding:12px;
-border:none;
-border-radius:12px;
-background:#071d33;
-color:#fff;
-font-size:14px;
-font-weight:bold;
-cursor:pointer;
-margin-top:auto;
-}
-
-/* MODAL */
-
-.modal{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#fff;
-z-index:9999;
-overflow-y:auto;
-display:none;
-padding-bottom:100px;
-}
-
-.modal-content{
-padding:16px;
-}
-
-.close-btn{
-font-size:28px;
-font-weight:bold;
-margin-bottom:10px;
-cursor:pointer;
-color:#071d33;
-}
-
-.slider{
-position:relative;
-overflow:hidden;
-border-radius:18px;
-}
-
-.slide-image{
-width:100%;
-height:420px;
-object-fit:cover;
-border-radius:18px;
-transition:0.3s;
-}
-
-.slide-btn{
-position:absolute;
-top:50%;
-transform:translateY(-50%);
-background:rgba(0,0,0,0.4);
-color:#fff;
-border:none;
-font-size:22px;
-width:42px;
-height:42px;
-border-radius:50%;
-cursor:pointer;
-}
-
-.prev{
-left:10px;
-}
-
-.next{
-right:10px;
-}
-
-.zoom-buttons{
-display:flex;
-gap:10px;
-margin-top:10px;
-}
-
-.zoom-buttons button{
-flex:1;
-padding:12px;
-border:none;
-border-radius:12px;
-background:#071d33;
-color:#fff;
-font-weight:bold;
-}
-
-.modal-name{
-font-size:24px;
-font-weight:bold;
-margin-top:16px;
-margin-bottom:8px;
-color:#071d33;
-}
-
-.modal-desc{
-font-size:14px;
-line-height:1.6;
-color:#5b7785;
-margin-bottom:12px;
-}
-
-.size-box{
-background:#f5f7fa;
-padding:10px;
-border-radius:12px;
-font-size:14px;
-font-weight:bold;
-margin-bottom:12px;
-}
-
-.review-box{
-background:#f5f7fa;
-padding:12px;
-border-radius:14px;
-margin-top:12px;
-font-size:13px;
-line-height:1.7;
-color:#2e3d5c;
-}
-
-.action-buttons{
-display:flex;
-gap:10px;
-margin-top:20px;
-}
-
-.action-buttons button{
-flex:1;
-padding:14px;
-border:none;
-border-radius:14px;
-background:#071d33;
-color:#fff;
-font-weight:bold;
-font-size:14px;
-cursor:pointer;
-}
-
-/* NAV */
-
-.bottom-nav{
-position:fixed;
-bottom:0;
-width:100%;
-background:#fff;
-display:flex;
-justify-content:space-around;
-padding:12px 0;
-box-shadow:0 -2px 10px rgba(0,0,0,0.05);
-z-index:999;
-}
-
-.nav-item{
-text-align:center;
-font-size:13px;
-font-weight:bold;
-color:#2e3d5c;
-}
-
-.nav-icon{
-display:block;
-font-size:20px;
-margin-bottom:4px;
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="header">
-<div class="logo">Dishari</div>
-</div>
-
-<div class="search-box">
-<input type="text" id="searchInput" placeholder="Search Fashion">
-</div>
-
-<div class="banner">
-<img src="https://res.cloudinary.com/dh6npc54z/image/upload/f_auto,q_auto,w_1200/Dishari_xahbgv">
-</div>
-
-<div class="category-row">
-
-<div class="category" onclick="filterCategory('All')">All</div>
-<div class="category" onclick="filterCategory('New Arrivals')">New Arrivals</div>
-<div class="category" onclick="filterCategory('Saree')">Saree</div>
-<div class="category" onclick="filterCategory('Kurti')">Kurti</div>
-<div class="category" onclick="filterCategory('Tops')">Tops</div>
-<div class="category" onclick="filterCategory('Palazzo')">Palazzo</div>
-<div class="category" onclick="filterCategory('Salwar')">Salwar</div>
-<div class="category" onclick="filterCategory('Gown')">Gown</div>
-<div class="category" onclick="filterCategory('Nighty')">Nighty</div>
-<div class="category" onclick="filterCategory('Western')">Western</div>
-<div class="category" onclick="filterCategory('Kids')">Kids</div>
-
-</div>
-
-<div class="section-title">
-✨ New Arrivals ✨
-</div>
-
-<div class="product-grid" id="productGrid"></div>
-
-<!-- PRODUCT MODAL -->
-
-<div class="modal" id="productModal">
-
-<div class="modal-content">
-
-<div class="close-btn" onclick="closeModal()">
-✕
-</div>
-
-<div class="slider">
-
-<button class="slide-btn prev" onclick="prevSlide()">❮</button>
-
-<img id="slideImage"
-class="slide-image">
-
-<button class="slide-btn next" onclick="nextSlide()">❯</button>
-
-</div>
-
-<div class="zoom-buttons">
-
-<button onclick="zoomIn()">Zoom In</button>
-
-<button onclick="zoomOut()">Zoom Out</button>
-
-</div>
-
-<div class="modal-name" id="modalName"></div>
-
-<div class="product-id" id="modalId"></div>
-
-<div class="size-box" id="modalSize"></div>
-
-<div class="modal-desc" id="modalDesc"></div>
-
-<div id="modalPrice"></div>
-
-<div id="modalStock"></div>
-
-<div class="review-box" id="modalReview"></div>
-
-<div class="action-buttons">
-
-<button onclick="goMore()">
-More
-</button>
-
-<button onclick="goCart()">
-Add To Cart
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- NAV -->
-
-<div class="bottom-nav">
-
-<div class="nav-item">
-<span class="nav-icon">🏠</span>
-Home
-</div>
-
-<div class="nav-item">
-<span class="nav-icon">🛍️</span>
-Products
-</div>
-
-<div class="nav-item">
-<span class="nav-icon">🛒</span>
-Cart
-</div>
-
-<div class="nav-item">
-<span class="nav-icon">📦</span>
-Track
-</div>
-
-</div>
-
 <script>
 
 const sheetURL =
-"https://docs.google.com/spreadsheets/d/12klOqNz4ER47bvsZrvqJMkYnghi_T63J_LmaYvNeb9c/gviz/tq?tqx=out:csv&sheet=Dishari1";
+"https://docs.google.com/spreadsheets/d/12klOqNz4ER47bvsZrvqJMkYnghi_T63J_LmaYvNeb9c/gviz/tq?tqx=out:json&sheet=Dishari1";
 
 let allProducts = [];
 
@@ -531,33 +30,35 @@ const reviews = [
 async function fetchProducts(){
 
 const response = await fetch(sheetURL);
-const csv = await response.text();
+const text = await response.text();
 
-const rows = csv.split("\n").slice(1);
+const json = JSON.parse(text.substring(47).slice(0,-2));
+
+const rows = json.table.rows;
 
 allProducts = rows.map((row,index)=>{
 
-const cols = row.split(",");
+const cols = row.c || [];
 
 return{
 
-priority: cols[0]?.replace(/"/g,'').trim(),
-name: cols[1]?.replace(/"/g,'').trim(),
-category: cols[2]?.replace(/"/g,'').trim(),
-show: cols[3]?.replace(/"/g,'').trim(),
-price: cols[4]?.replace(/"/g,'').trim(),
-description: cols[5]?.replace(/"/g,'').trim(),
+priority: cols[0]?.v || "",
+name: cols[1]?.v || "",
+category: cols[2]?.v || "",
+show: cols[3]?.v || "",
+price: cols[4]?.v || "",
+description: cols[5]?.v || "",
 
-image: cols[6]?.replace(/"/g,'').trim(),     // G
-stock: cols[7]?.replace(/"/g,'').trim(),
-offer: cols[8]?.replace(/"/g,'').trim(),
+image: cols[6]?.v || "",
+stock: cols[7]?.v || "",
+offer: cols[8]?.v || "",
 
-img2: cols[9]?.replace(/"/g,'').trim(),      // J
-img3: cols[10]?.replace(/"/g,'').trim(),     // K
-img4: cols[11]?.replace(/"/g,'').trim(),     // L
+img2: cols[9]?.v || "",
+img3: cols[10]?.v || "",
+img4: cols[11]?.v || "",
 
-size: cols[12]?.replace(/"/g,'').trim(),     // M
-description2: cols[13]?.replace(/"/g,'').trim(), // N
+size: cols[12]?.v || "",
+description2: cols[13]?.v || "",
 
 id:"DS"+(100000+index)
 
@@ -566,7 +67,7 @@ id:"DS"+(100000+index)
 })
 
 .filter(item =>
-item.show.toLowerCase()==="yes"
+String(item.show).toLowerCase()==="yes"
 )
 
 .sort((a,b)=>
@@ -574,7 +75,7 @@ Number(a.priority)-Number(b.priority)
 );
 
 const newArrivalProducts = allProducts.filter(item =>
-item.category.toLowerCase()==="new arrivals"
+String(item.category).toLowerCase()==="new arrivals"
 );
 
 displayProducts(newArrivalProducts);
@@ -640,7 +141,7 @@ container.innerHTML += `
 class="product-image"
 loading="lazy"
 onclick='openModal(${JSON.stringify(product)})'
-src="${product.image}?w=600&q=75">
+src="${product.image}">
 
 <div class="product-details">
 
@@ -690,7 +191,7 @@ return;
 }
 
 const filtered = allProducts.filter(item =>
-item.category.toLowerCase()===category.toLowerCase()
+String(item.category).toLowerCase()===category.toLowerCase()
 );
 
 displayProducts(filtered);
@@ -703,7 +204,7 @@ document.getElementById("searchInput")
 const value=this.value.toLowerCase();
 
 const filtered=allProducts.filter(item =>
-item.name.toLowerCase().includes(value)
+String(item.name).toLowerCase().includes(value)
 );
 
 displayProducts(filtered);
@@ -711,6 +212,8 @@ displayProducts(filtered);
 });
 
 function openModal(product){
+
+currentCategory = product.category;
 
 document.getElementById("productModal").style.display="block";
 
@@ -721,7 +224,7 @@ product.img2,
 product.img3,
 product.img4
 
-].filter(Boolean);
+].filter(img => img && img.trim() !== "");
 
 currentIndex=0;
 zoomLevel=1;
@@ -804,6 +307,11 @@ function closeModal(){
 
 document.getElementById("productModal").style.display="none";
 
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
 }
 
 function updateSlide(){
@@ -812,7 +320,7 @@ const img =
 document.getElementById("slideImage");
 
 img.src =
-currentImages[currentIndex]+"?w=900&q=80";
+currentImages[currentIndex];
 
 img.style.transform=`scale(${zoomLevel})`;
 
@@ -873,13 +381,10 @@ behavior:"smooth"
 
 function goCart(){
 
-window.location.href="mycart.html";
+window.location.href="cart.html";
 
 }
 
 fetchProducts();
 
 </script>
-
-</body>
-</html>
