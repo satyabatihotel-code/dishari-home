@@ -8,7 +8,7 @@ let allProducts = [];
 let currentImages = [];
 let currentIndex = 0;
 let zoomLevel = 1;
-let currentCategory = "New Arrivals";
+let currentCategory = "All";
 
 const reviews = [
 
@@ -29,10 +29,14 @@ const reviews = [
 
 async function fetchProducts(){
 
+try{
+
 const response = await fetch(sheetURL);
+
 const text = await response.text();
 
-const json = JSON.parse(text.substring(47).slice(0,-2));
+const json =
+JSON.parse(text.substring(47).slice(0,-2));
 
 const rows = json.table.rows;
 
@@ -49,16 +53,16 @@ show: cols[3]?.v || "",
 price: cols[4]?.v || "",
 description: cols[5]?.v || "",
 
-image: cols[6]?.v || "",
+image: cleanURL(cols[6]?.v || ""),   // G
 stock: cols[7]?.v || "",
 offer: cols[8]?.v || "",
 
-img2: cols[9]?.v || "",
-img3: cols[10]?.v || "",
-img4: cols[11]?.v || "",
+img2: cleanURL(cols[9]?.v || ""),    // J
+img3: cleanURL(cols[10]?.v || ""),   // K
+img4: cleanURL(cols[11]?.v || ""),   // L
 
-size: cols[12]?.v || "",
-description2: cols[13]?.v || "",
+size: cols[12]?.v || "",             // M
+description2: cols[13]?.v || "",     // N
 
 id:"DS"+(100000+index)
 
@@ -74,13 +78,35 @@ String(item.show).toLowerCase()==="yes"
 Number(a.priority)-Number(b.priority)
 );
 
-const newArrivalProducts = allProducts.filter(item =>
+const newArrivalProducts =
+allProducts.filter(item =>
 String(item.category).toLowerCase()==="new arrivals"
 );
 
 displayProducts(newArrivalProducts);
 
+}catch(error){
+
+console.log("Sheet Error :",error);
+
 }
+
+}
+
+/* FIX IMAGE URL */
+
+function cleanURL(url){
+
+if(!url) return "";
+
+return String(url)
+.replace(/"/g,"")
+.replace(/\s/g,"")
+.trim();
+
+}
+
+/* DISPLAY PRODUCTS */
 
 function displayProducts(products){
 
@@ -89,9 +115,7 @@ document.getElementById("productGrid");
 
 container.innerHTML="";
 
-products.forEach((product,index)=>{
-
-let actualIndex = allProducts.indexOf(product);
+products.forEach((product)=>{
 
 let priceHTML="";
 
@@ -142,8 +166,9 @@ container.innerHTML += `
 <img
 class="product-image"
 loading="lazy"
-onclick="openModalByIndex(${actualIndex})"
-src="${product.image}">
+src="${product.image}"
+onerror="this.src='https://via.placeholder.com/500x700?text=No+Image'"
+onclick='openModal(${JSON.stringify(product)})'>
 
 <div class="product-details">
 
@@ -181,13 +206,7 @@ Add To Cart
 
 }
 
-function openModalByIndex(index){
-
-const product = allProducts[index];
-
-openModal(product);
-
-}
+/* CATEGORY FILTER */
 
 function filterCategory(category){
 
@@ -196,36 +215,48 @@ currentCategory = category;
 if(category==="All"){
 
 displayProducts(allProducts);
+
 return;
 
 }
 
-const filtered = allProducts.filter(item =>
-String(item.category).toLowerCase()===category.toLowerCase()
+const filtered =
+allProducts.filter(item =>
+String(item.category).toLowerCase() ===
+category.toLowerCase()
 );
 
 displayProducts(filtered);
 
 }
 
+/* SEARCH */
+
 document.getElementById("searchInput")
 .addEventListener("keyup",function(){
 
-const value=this.value.toLowerCase();
+const value =
+this.value.toLowerCase();
 
-const filtered=allProducts.filter(item =>
-String(item.name).toLowerCase().includes(value)
+const filtered =
+allProducts.filter(item =>
+String(item.name)
+.toLowerCase()
+.includes(value)
 );
 
 displayProducts(filtered);
 
 });
 
+/* OPEN MODAL */
+
 function openModal(product){
 
 currentCategory = product.category;
 
-document.getElementById("productModal").style.display="block";
+document.getElementById("productModal")
+.style.display="block";
 
 currentImages = [
 
@@ -234,24 +265,28 @@ product.img2,
 product.img3,
 product.img4
 
-].filter(img => img && img.trim() !== "");
+].filter(img =>
+img && img.trim()!==""
+);
 
-currentIndex=0;
-zoomLevel=1;
+currentIndex = 0;
+zoomLevel = 1;
 
 updateSlide();
 
-document.getElementById("modalName").innerHTML =
-product.name;
+document.getElementById("modalName")
+.innerHTML = product.name;
 
-document.getElementById("modalId").innerHTML =
-"Product ID : "+product.id;
+document.getElementById("modalId")
+.innerHTML = "Product ID : "+product.id;
 
-document.getElementById("modalSize").innerHTML =
-"Size : "+product.size;
+document.getElementById("modalDesc")
+.innerHTML = product.description2;
 
-document.getElementById("modalDesc").innerHTML =
-product.description2;
+document.getElementById("modalSize")
+.innerHTML = "Size : "+product.size;
+
+/* PRICE */
 
 let priceHTML="";
 
@@ -289,33 +324,50 @@ priceHTML=`
 
 }
 
-document.getElementById("modalPrice").innerHTML =
-priceHTML;
+document.getElementById("modalPrice")
+.innerHTML = priceHTML;
 
-document.getElementById("modalStock").innerHTML =
-`<div class="stock ${product.stock==="Out Of Stock" ? "outstock":"instock"}">${product.stock}</div>`;
+/* STOCK */
 
-const randomReview1 =
+document.getElementById("modalStock")
+.innerHTML =
+
+`<div class="stock ${product.stock==="Out Of Stock" ? "outstock":"instock"}">
+${product.stock}
+</div>`;
+
+/* RANDOM REVIEWS */
+
+const review1 =
 reviews[Math.floor(Math.random()*reviews.length)];
 
-const randomReview2 =
+const review2 =
 reviews[Math.floor(Math.random()*reviews.length)];
 
-const randomReview3 =
+const review3 =
 reviews[Math.floor(Math.random()*reviews.length)];
 
-document.getElementById("modalReview").innerHTML =
+document.getElementById("modalReview")
+.innerHTML =
+
 `
-⭐ ${randomReview1}<br><br>
-⭐ ${randomReview2}<br><br>
-⭐ ${randomReview3}
+⭐ ${review1}
+<br><br>
+
+⭐ ${review2}
+<br><br>
+
+⭐ ${review3}
 `;
 
 }
 
+/* CLOSE MODAL */
+
 function closeModal(){
 
-document.getElementById("productModal").style.display="none";
+document.getElementById("productModal")
+.style.display="none";
 
 window.scrollTo({
 top:0,
@@ -323,6 +375,8 @@ behavior:"smooth"
 });
 
 }
+
+/* IMAGE SLIDER */
 
 function updateSlide(){
 
@@ -332,49 +386,63 @@ document.getElementById("slideImage");
 img.src =
 currentImages[currentIndex];
 
-img.style.transform=`scale(${zoomLevel})`;
+img.style.transform =
+`scale(${zoomLevel})`;
 
 }
 
+/* NEXT */
+
 function nextSlide(){
 
-if(currentIndex < currentImages.length-1){
+if(currentIndex <
+currentImages.length-1){
 
 currentIndex++;
+
 updateSlide();
 
 }
 
 }
+
+/* PREVIOUS */
 
 function prevSlide(){
 
 if(currentIndex > 0){
 
 currentIndex--;
+
 updateSlide();
 
 }
 
 }
 
+/* ZOOM */
+
 function zoomIn(){
 
-zoomLevel +=0.2;
+zoomLevel += 0.2;
+
 updateSlide();
 
 }
 
 function zoomOut(){
 
-if(zoomLevel>1){
+if(zoomLevel > 1){
 
-zoomLevel -=0.2;
+zoomLevel -= 0.2;
+
 updateSlide();
 
 }
 
 }
+
+/* MORE BUTTON */
 
 function goMore(){
 
@@ -383,17 +451,23 @@ closeModal();
 filterCategory(currentCategory);
 
 window.scrollTo({
+
 top:500,
 behavior:"smooth"
+
 });
 
 }
 
+/* CART PAGE */
+
 function goCart(){
 
-window.location.href="cart.html";
+window.location.href = "cart.html";
 
 }
+
+/* LOAD */
 
 fetchProducts();
 
