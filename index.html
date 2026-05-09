@@ -311,13 +311,22 @@ color:#5b7785;
 margin-bottom:12px;
 }
 
+.size-box{
+background:#f5f7fa;
+padding:10px;
+border-radius:12px;
+font-size:14px;
+font-weight:bold;
+margin-bottom:12px;
+}
+
 .review-box{
 background:#f5f7fa;
 padding:12px;
 border-radius:14px;
 margin-top:12px;
 font-size:13px;
-line-height:1.5;
+line-height:1.7;
 color:#2e3d5c;
 }
 
@@ -336,6 +345,7 @@ background:#071d33;
 color:#fff;
 font-weight:bold;
 font-size:14px;
+cursor:pointer;
 }
 
 /* NAV */
@@ -385,6 +395,7 @@ margin-bottom:4px;
 <div class="category-row">
 
 <div class="category" onclick="filterCategory('All')">All</div>
+<div class="category" onclick="filterCategory('New Arrivals')">New Arrivals</div>
 <div class="category" onclick="filterCategory('Saree')">Saree</div>
 <div class="category" onclick="filterCategory('Kurti')">Kurti</div>
 <div class="category" onclick="filterCategory('Tops')">Tops</div>
@@ -394,8 +405,6 @@ margin-bottom:4px;
 <div class="category" onclick="filterCategory('Nighty')">Nighty</div>
 <div class="category" onclick="filterCategory('Western')">Western</div>
 <div class="category" onclick="filterCategory('Kids')">Kids</div>
-<div class="category" onclick="filterCategory('Bedsheet')">Bedsheet</div>
-<div class="category" onclick="filterCategory('Trendz')">Trendz</div>
 
 </div>
 
@@ -438,6 +447,8 @@ class="slide-image">
 
 <div class="product-id" id="modalId"></div>
 
+<div class="size-box" id="modalSize"></div>
+
 <div class="modal-desc" id="modalDesc"></div>
 
 <div id="modalPrice"></div>
@@ -448,12 +459,12 @@ class="slide-image">
 
 <div class="action-buttons">
 
-<button>
-Add To Cart
+<button onclick="goMore()">
+More
 </button>
 
-<button onclick="scrollToProducts()">
-More
+<button onclick="goCart()">
+Add To Cart
 </button>
 
 </div>
@@ -498,6 +509,7 @@ let allProducts = [];
 let currentImages = [];
 let currentIndex = 0;
 let zoomLevel = 1;
+let currentCategory = "New Arrivals";
 
 const reviews = [
 
@@ -535,15 +547,17 @@ category: cols[2]?.replace(/"/g,'').trim(),
 show: cols[3]?.replace(/"/g,'').trim(),
 price: cols[4]?.replace(/"/g,'').trim(),
 description: cols[5]?.replace(/"/g,'').trim(),
-image: cols[6]?.replace(/"/g,'').trim(),
+
+image: cols[6]?.replace(/"/g,'').trim(),     // G
 stock: cols[7]?.replace(/"/g,'').trim(),
 offer: cols[8]?.replace(/"/g,'').trim(),
 
-img2: cols[9]?.replace(/"/g,'').trim(),
-img3: cols[10]?.replace(/"/g,'').trim(),
-img4: cols[11]?.replace(/"/g,'').trim(),
-img5: cols[12]?.replace(/"/g,'').trim(),
-img6: cols[13]?.replace(/"/g,'').trim(),
+img2: cols[9]?.replace(/"/g,'').trim(),      // J
+img3: cols[10]?.replace(/"/g,'').trim(),     // K
+img4: cols[11]?.replace(/"/g,'').trim(),     // L
+
+size: cols[12]?.replace(/"/g,'').trim(),     // M
+description2: cols[13]?.replace(/"/g,'').trim(), // N
 
 id:"DS"+(100000+index)
 
@@ -559,11 +573,11 @@ item.show.toLowerCase()==="yes"
 Number(a.priority)-Number(b.priority)
 );
 
-const trendzOnly = allProducts.filter(item =>
-item.category.toLowerCase()==="trendz"
+const newArrivalProducts = allProducts.filter(item =>
+item.category.toLowerCase()==="new arrivals"
 );
 
-displayProducts(trendzOnly);
+displayProducts(newArrivalProducts);
 
 }
 
@@ -575,8 +589,6 @@ document.getElementById("productGrid");
 container.innerHTML="";
 
 products.forEach((product,index)=>{
-
-const review = reviews[index % reviews.length];
 
 let priceHTML="";
 
@@ -628,7 +640,7 @@ container.innerHTML += `
 class="product-image"
 loading="lazy"
 onclick='openModal(${JSON.stringify(product)})'
-src="${product.image}?w=500&q=70">
+src="${product.image}?w=600&q=75">
 
 <div class="product-details">
 
@@ -652,7 +664,7 @@ ${product.stock}
 
 </div>
 
-<button class="buy-btn">
+<button class="buy-btn" onclick="goCart()">
 Add To Cart
 </button>
 
@@ -668,10 +680,11 @@ Add To Cart
 
 function filterCategory(category){
 
+currentCategory = category;
+
 if(category==="All"){
 
 displayProducts(allProducts);
-
 return;
 
 }
@@ -706,13 +719,12 @@ currentImages = [
 product.image,
 product.img2,
 product.img3,
-product.img4,
-product.img5,
-product.img6
+product.img4
 
 ].filter(Boolean);
 
 currentIndex=0;
+zoomLevel=1;
 
 updateSlide();
 
@@ -720,10 +732,13 @@ document.getElementById("modalName").innerHTML =
 product.name;
 
 document.getElementById("modalId").innerHTML =
-product.id;
+"Product ID : "+product.id;
+
+document.getElementById("modalSize").innerHTML =
+"Size : "+product.size;
 
 document.getElementById("modalDesc").innerHTML =
-product.description;
+product.description2;
 
 let priceHTML="";
 
@@ -767,11 +782,21 @@ priceHTML;
 document.getElementById("modalStock").innerHTML =
 `<div class="stock ${product.stock==="Out Of Stock" ? "outstock":"instock"}">${product.stock}</div>`;
 
-const randomReview =
+const randomReview1 =
+reviews[Math.floor(Math.random()*reviews.length)];
+
+const randomReview2 =
+reviews[Math.floor(Math.random()*reviews.length)];
+
+const randomReview3 =
 reviews[Math.floor(Math.random()*reviews.length)];
 
 document.getElementById("modalReview").innerHTML =
-"⭐ "+randomReview;
+`
+⭐ ${randomReview1}<br><br>
+⭐ ${randomReview2}<br><br>
+⭐ ${randomReview3}
+`;
 
 }
 
@@ -787,7 +812,7 @@ const img =
 document.getElementById("slideImage");
 
 img.src =
-currentImages[currentIndex]+"?w=800&q=75";
+currentImages[currentIndex]+"?w=900&q=80";
 
 img.style.transform=`scale(${zoomLevel})`;
 
@@ -798,7 +823,6 @@ function nextSlide(){
 if(currentIndex < currentImages.length-1){
 
 currentIndex++;
-
 updateSlide();
 
 }
@@ -810,7 +834,6 @@ function prevSlide(){
 if(currentIndex > 0){
 
 currentIndex--;
-
 updateSlide();
 
 }
@@ -820,7 +843,6 @@ updateSlide();
 function zoomIn(){
 
 zoomLevel +=0.2;
-
 updateSlide();
 
 }
@@ -830,21 +852,28 @@ function zoomOut(){
 if(zoomLevel>1){
 
 zoomLevel -=0.2;
-
 updateSlide();
 
 }
 
 }
 
-function scrollToProducts(){
+function goMore(){
 
 closeModal();
+
+filterCategory(currentCategory);
 
 window.scrollTo({
 top:500,
 behavior:"smooth"
 });
+
+}
+
+function goCart(){
+
+window.location.href="mycart.html";
 
 }
 
