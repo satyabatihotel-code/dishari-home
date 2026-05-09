@@ -91,6 +91,8 @@ container.innerHTML="";
 
 products.forEach((product,index)=>{
 
+let actualIndex = allProducts.indexOf(product);
+
 let priceHTML="";
 
 if(product.offer){
@@ -140,7 +142,7 @@ container.innerHTML += `
 <img
 class="product-image"
 loading="lazy"
-onclick='openModal(${JSON.stringify(product)})'
+onclick="openModalByIndex(${actualIndex})"
 src="${product.image}">
 
 <div class="product-details">
@@ -176,6 +178,14 @@ Add To Cart
 `;
 
 });
+
+}
+
+function openModalByIndex(index){
+
+const product = allProducts[index];
+
+openModal(product);
 
 }
 
